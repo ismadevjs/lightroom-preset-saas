@@ -7,7 +7,6 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const MongoStore = require("connect-mongo")(session);
-const toastr = require("express-toastr");
 let sessionOptions = session({
   secret: "learn javascript from scratch",
   store: new MongoStore({
@@ -23,17 +22,12 @@ let sessionOptions = session({
 app.use(sessionOptions);
 app.use(cookieParser());
 app.use(flash());
-app.use(toastr());
 app.use(function (req, res, next) {
   res.locals.user = req.session.user;
   next();
 });
 app.use(function (req, res, next) {
   res.locals.admin = req.session.admin;
-  next();
-});
-app.use(function (req, res, next) {
-  res.locals.toasts = req.toastr.render();
   next();
 });
 app.use(express.static("public"));

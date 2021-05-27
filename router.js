@@ -12,4 +12,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 // frontend area
+router.get("/", function (req, res) {
+  res.send("hello from github");
+});
 module.exports = router;
