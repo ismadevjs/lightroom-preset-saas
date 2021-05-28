@@ -4,6 +4,7 @@ const multer = require("multer");
 const path = require("path");
 const specialPages = require("./controller/specialPages");
 const frontendController = require("./controller/frontendController");
+const authenticationController = require("./controller/authenticationController");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -19,6 +20,7 @@ router.get("/", function (req, res) {
 });
 
 router.get("/signup", frontendController.signup);
+router.post("/signup", authenticationController.signupPost);
 router.get("/404", specialPages.errorPage);
 
 module.exports = router;
