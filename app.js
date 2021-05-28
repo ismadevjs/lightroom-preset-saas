@@ -7,6 +7,7 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const MongoStore = require("connect-mongo")(session);
+
 let sessionOptions = session({
   secret: "learn javascript from scratch",
   store: new MongoStore({
