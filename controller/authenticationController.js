@@ -15,7 +15,13 @@ exports.signinPost = function (req, res) {
   const user = new User(req.body);
   user
     .login()
-    .then((r) => res.redirect("/"))
+    .then((r) => {
+      req.session.user = { _id: r._id, username: r.username, email: r.email };
+      req.flash("message", "Welcome Back!");
+      req.session.save(() => {
+        res.redirect("/");
+      });
+    })
     .catch((e) => {
       req.flash("message", e);
       req.session.save(() => {
