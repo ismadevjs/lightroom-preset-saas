@@ -73,6 +73,7 @@ User.prototype.register = function () {
         email: this.data.email.trim(),
         password: bcrypt.hashSync(this.data.password, salt),
         active: false,
+        artist : false,
         created_at: timestaps.ladate(),
         updated_at: timestaps.ladate(),
       };

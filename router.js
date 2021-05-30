@@ -15,14 +15,11 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 // frontend area
-router.get("/", function (req, res) {
-  res.send("hello from github");
-});
-
+router.get("/", frontendController.index);
 router.get("/signup", frontendController.signup);
 router.post("/signup", authenticationController.signupPost);
 router.get("/signin", frontendController.signin);
-router.post("/signin", authenticationController.signinPost)
+router.post("/signin", authenticationController.signinPost);
 router.get("/404", specialPages.errorPage);
-
+router.get("/logout", authenticationController.logout);
 module.exports = router;
