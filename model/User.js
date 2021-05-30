@@ -1,7 +1,6 @@
 const validator = require("validator");
 const usersCollection = require("../db").db().collection("users");
 const bcrypt = require("bcryptjs");
-const { Timestamp } = require("bson");
 const salt = bcrypt.genSaltSync(12);
 const timestaps = require("../controller/dateController");
 const User = function (data) {
@@ -25,16 +24,16 @@ User.prototype.cleanR = async function () {
   if (!/\s/.test(this.data.username) === false) {
     this.errors.push("username should not have spaces in between");
   }
-  if (this.password.length > 0 && this.data.password > 50) {
+  if (this.data.password.length > 0 && this.data.password.length > 50) {
     this.errors.push("Password should not exceed 50 charachters");
   }
-  if (this.password.length < 6) {
+  if (this.data.password.length < 6) {
     this.errors.push("Password should be more than 6 charachters");
   }
   if (this.data.username.length > 0 && this.data.username.length > 20) {
     this.errors.push("Username should not exceed 20 charachters");
   }
-  if (this.username.length < 3) {
+  if (this.data.username.length < 3) {
     this.errors.push("Password should be more than 3 charachters");
   }
   await usersCollection.findOne(
@@ -61,7 +60,7 @@ User.prototype.register = function () {
         updated_at : timestaps.ladate()
       };
       //await usersCollection.insertOne(this.data);
-      //resolve();
+      resolve();
     }
   });
 };

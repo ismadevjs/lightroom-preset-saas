@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const ejs = require("ejs");
+require("ejs");
 const router = require("./router");
 
 const flash = require("connect-flash");
@@ -31,6 +31,10 @@ app.use(function (req, res, next) {
   res.locals.admin = req.session.admin;
   next();
 });
+app.use(function(req, res, next) {
+  res.locals.message = req.flash('message');
+  next();
+})
 app.use(express.static("public"));
 app.use(express.static("uploads"));
 app.set("views", "views");
