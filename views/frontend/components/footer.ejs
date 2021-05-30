@@ -111,7 +111,11 @@
         $(document).ready(e => {
             e.preventDefault;
             let message = "<%=message%>";
-            console.log(message);
+            message.split(',').map(m => {
+                if (m.length) {
+                    toastr.info(m);
+                }
+            })
         })
     </script>
 </body>

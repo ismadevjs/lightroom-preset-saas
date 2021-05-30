@@ -53,8 +53,8 @@ User.prototype.register = function () {
       reject(this.errors);
     } else {
       this.data = {
-        username: this.data.username,
-        email: this.data.email,
+        username: this.data.username.trim(),
+        email: this.data.email.trim(),
         password: bcrypt.hashSync(this.data.password, salt),
         created_at: timestaps.ladate(),
         updated_at : timestaps.ladate()
