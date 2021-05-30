@@ -45,7 +45,33 @@ User.prototype.cleanR = async function () {
     }
   );
 };
-
+User.prototype.cleanL = async function () {
+  if (this.data.email === "") {
+    this.errors.push("the email should not be empty");
+  }
+  if (this.data.password === "") {
+    this.errors.push("the password should not be empty");
+  }
+  if (!validator.isEmail(this.data.email)) {
+    this.errors.push("Incorrect email adress");
+  }
+  if (this.data.password.length > 0 && this.data.password.length > 50) {
+    this.errors.push("Password should not exceed 50 charachters");
+  }
+  if (this.data.password.length < 6) {
+    this.errors.push("Password should be more than 6 charachters");
+  }
+  await usersCollection.findOne({ email: this.data.email }).then((e) => {
+    if (
+      e !== null &&
+      bcrypt.compareSync(this.data.password, e.password) == false
+    ) {
+      this.errors.push("Wrong password");
+    } else {
+      this.errors.push("Email / Password invalid");
+    }
+  });
+};
 User.prototype.register = function () {
   return new Promise(async (resolve, reject) => {
     this.cleanR();
@@ -56,11 +82,22 @@ User.prototype.register = function () {
         username: this.data.username.trim(),
         email: this.data.email.trim(),
         password: bcrypt.hashSync(this.data.password, salt),
-        active : false,
+        active: false,
         created_at: timestaps.ladate(),
         updated_at: timestaps.ladate(),
       };
       await usersCollection.insertOne(this.data);
+      resolve();
+    }
+  });
+};
+User.prototype.login = function () {
+  return new Promise(async (resolve, reject) => {
+    this.cleanL();
+    if (this.errors.length) {
+      reject(this.errors);
+    } else {
+      //  await usersCollection.insertOne(this.data);
       resolve();
     }
   });
