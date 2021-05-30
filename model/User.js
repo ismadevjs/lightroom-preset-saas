@@ -25,6 +25,18 @@ User.prototype.cleanR = async function () {
   if (!/\s/.test(this.data.username) === false) {
     this.errors.push("username should not have spaces in between");
   }
+  if (this.password.length > 0 && this.data.password > 50) {
+    this.errors.push("Password should not exceed 50 charachters");
+  }
+  if (this.password.length < 6) {
+    this.errors.push("Password should be more than 6 charachters");
+  }
+  if (this.data.username.length > 0 && this.data.username.length > 20) {
+    this.errors.push("Username should not exceed 20 charachters");
+  }
+  if (this.username.length < 3) {
+    this.errors.push("Password should be more than 3 charachters");
+  }
   await usersCollection.findOne(
     { username: this.data.username },
     (err, founded) => {
@@ -45,11 +57,11 @@ User.prototype.register = function () {
         username: this.data.username,
         email: this.data.email,
         password: bcrypt.hashSync(this.data.password, salt),
-        created_at: Timestamp,
+        created_at: timestaps.ladate(),
+        updated_at : timestaps.ladate()
       };
-      this.timestaps();
       //await usersCollection.insertOne(this.data);
-      resolve();
+      //resolve();
     }
   });
 };

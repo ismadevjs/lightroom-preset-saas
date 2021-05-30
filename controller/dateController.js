@@ -14,12 +14,15 @@ const months = [
   "Dec",
 ];
 
-exports.timestaps = function () {
-    let obj = {
-        year : date.getFullYear(),
-        months : date.getMonth(),
-        days : date.getDate(),
-        time : date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
-    }
-    console.log(obj)
+exports.ladate = function () {
+  let obj = {
+    year: date.getFullYear(),
+    months: months[date.getMonth()],
+    days: date.getDate(),
+    time: date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(),
+  };
+  return {
+      fullDate  : obj.days + ' ' + obj.months + ' ' + obj.year,
+      fullTime : obj.time,
+  };
 };
