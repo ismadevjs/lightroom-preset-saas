@@ -21,6 +21,7 @@ router.get("/", function (req, res) {
 
 router.get("/signup", frontendController.signup);
 router.post("/signup", authenticationController.signupPost);
+router.get("/signin", frontendController.signin);
 router.get("/404", specialPages.errorPage);
 
 module.exports = router;

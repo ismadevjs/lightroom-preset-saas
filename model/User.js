@@ -56,10 +56,11 @@ User.prototype.register = function () {
         username: this.data.username.trim(),
         email: this.data.email.trim(),
         password: bcrypt.hashSync(this.data.password, salt),
+        active : false,
         created_at: timestaps.ladate(),
-        updated_at : timestaps.ladate()
+        updated_at: timestaps.ladate(),
       };
-      //await usersCollection.insertOne(this.data);
+      await usersCollection.insertOne(this.data);
       resolve();
     }
   });
