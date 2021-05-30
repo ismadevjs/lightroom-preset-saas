@@ -61,16 +61,6 @@ User.prototype.cleanL = async function () {
   if (this.data.password.length < 6) {
     this.errors.push("Password should be more than 6 charachters");
   }
-  await usersCollection.findOne({ email: this.data.email }).then((e) => {
-    if (
-      e !== null &&
-      bcrypt.compareSync(this.data.password, e.password) == false
-    ) {
-      this.errors.push("Wrong password");
-    } else {
-      this.errors.push("Email / Password invalid");
-    }
-  });
 };
 User.prototype.register = function () {
   return new Promise(async (resolve, reject) => {
@@ -97,8 +87,13 @@ User.prototype.login = function () {
     if (this.errors.length) {
       reject(this.errors);
     } else {
-      //  await usersCollection.insertOne(this.data);
-      resolve();
+      usersCollection.findOne({ email: this.data.email }).then((e) => {
+        if (e && bcrypt.compareSync(this.data.password, e.password)) {
+          resolve(e);
+        } else {
+          reject("Email / Password invalid");
+        }
+      });
     }
   });
 };
