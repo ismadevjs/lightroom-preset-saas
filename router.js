@@ -22,5 +22,6 @@ router.get("/signin", frontendController.signin);
 router.post("/signin", authenticationController.signinPost);
 router.get("/404", specialPages.errorPage);
 router.get("/logout", authenticationController.logout);
-router.get('/author', frontendController.author)
+router.get("/profile", frontendController.profile);
+router.post('/settings', authenticationController.settings);
 module.exports = router;

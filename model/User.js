@@ -3,6 +3,7 @@ const usersCollection = require("../db").db().collection("users");
 const bcrypt = require("bcryptjs");
 const salt = bcrypt.genSaltSync(12);
 const timestaps = require("../controller/dateController");
+const randomHash = require('../controller/randomHash');
 const User = function (data) {
   this.data = data;
   this.errors = [];
@@ -74,12 +75,14 @@ User.prototype.register = function () {
         email: this.data.email.trim(),
         password: bcrypt.hashSync(this.data.password, salt),
         avatar : null,
+        cover : null,
         about : null,
         active: false,
         artist : false,
         verified : false,
         website : null,
-        
+        socials : [],
+        token : randomHash.randomHash(20),
         created_at: timestaps.ladate(),
         updated_at: timestaps.ladate(),
       };

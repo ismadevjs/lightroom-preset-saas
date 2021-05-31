@@ -30,7 +30,24 @@ exports.signinPost = function (req, res) {
     });
 };
 exports.logout = function (req, res) {
-  req.session.destroy(function() {
-    res.redirect('/')
-  })
+  req.session.destroy(function () {
+    res.redirect("/");
+  });
+};
+exports.settings = function (req, res) {
+  const user = new User(req.body);
+  user
+    .updateSettings()
+    .then((r) => {
+      req.flash("message", "Updated!");
+      req.session.save(() => {
+        res.redirect("/profile");
+      });
+    })
+    .catch((e) => {
+      req.flash("message", e);
+      req.session.save(() => {
+        res.redirect("/profile");
+      });
+    });
 };

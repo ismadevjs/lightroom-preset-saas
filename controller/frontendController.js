@@ -1,3 +1,5 @@
+const { ObjectId } = require("bson");
+const usersCollection = require("../db").db().collection("users");
 exports.index = function (req, res) {
   res.render("frontend/index");
 };
@@ -7,6 +9,8 @@ exports.signup = function (req, res) {
 exports.signin = function (req, res) {
   res.render("frontend/signin");
 };
-exports.author = function (req, res) {
-  res.render("frontend/author");
+exports.profile = async function (req, res) {
+  res.render("frontend/profile", {
+    user : await usersCollection.findOne({_id : ObjectId(req.session.user._id)})
+  });
 };

@@ -2,7 +2,7 @@
     <div class="row row--grid">
         <!-- details form -->
         <div class="col-12 col-lg-6">
-            <form action="#" class="sign__form sign__form--profile">
+            <form action="/settings" method="POST" class="sign__form sign__form--profile">
                 <div class="row">
                     <div class="col-12">
                         <h4 class="sign__title">Profile details</h4>
@@ -36,8 +36,26 @@
                         </div>
                     </div>
 
+                    <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                        <div class="sign__group">
+                            <label class="sign__label" for="lastname">About</label>
+                            <textarea  type="text" name="about" class="sign__input" style="margin-top: 0px; margin-bottom: 0px; height: 135px;"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                        <div class="sign__group">
+                            <label class="sign__label" for="website">Website</label>
+                            <input id="website" type="text" name="website" class="sign__input" placeholder="https://site.com">
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-4 col-lg-4 col-xl-4" >
+                        <button class="sign__btn" id="social-media" type="button">Add social medias</button>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-12 col-xl-12" id="socials-add"></div>
+
                     <div class="col-12">
-                        <button class="sign__btn" type="button">Save</button>
+                        <button class="sign__btn" type="submit">Save</button>
                     </div>
                 </div>
             </form>
