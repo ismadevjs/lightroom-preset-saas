@@ -70,10 +70,16 @@ User.prototype.register = function () {
     } else {
       this.data = {
         username: this.data.username.trim(),
+        fullname : null,
         email: this.data.email.trim(),
         password: bcrypt.hashSync(this.data.password, salt),
+        avatar : null,
+        about : null,
         active: false,
         artist : false,
+        verified : false,
+        website : null,
+        
         created_at: timestaps.ladate(),
         updated_at: timestaps.ladate(),
       };
