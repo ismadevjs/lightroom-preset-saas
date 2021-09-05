@@ -10,8 +10,9 @@
 
                     <div class="col-12 col-md-6 col-lg-12 col-xl-6">
                         <div class="sign__group">
-                            <label class="sign__label" for="username">Login</label>
-                            <input id="username" type="text" name="username" class="sign__input" placeholder="User123">
+                            <label class="sign__label badge badge-success" for="username">Username (Cannot be changed)</label>
+                            <input type="hidden" value="<%=user._id%>" name="_id">
+                            <input id="username" type="text" class="sign__input" placeholder="<%=user.username%>" disabled>
                         </div>
                     </div>
 

@@ -3,7 +3,8 @@ const usersCollection = require("../db").db().collection("users");
 const bcrypt = require("bcryptjs");
 const salt = bcrypt.genSaltSync(12);
 const timestaps = require("../controller/dateController");
-const randomHash = require('../controller/randomHash');
+const randomHash = require("../controller/randomHash");
+const { ObjectId } = require("mongodb");
 const User = function (data) {
   this.data = data;
   this.errors = [];
@@ -71,18 +72,18 @@ User.prototype.register = function () {
     } else {
       this.data = {
         username: this.data.username.trim(),
-        fullname : null,
+        fullname: null,
         email: this.data.email.trim(),
         password: bcrypt.hashSync(this.data.password, salt),
-        avatar : null,
-        cover : null,
-        about : null,
+        avatar: null,
+        cover: null,
+        about: null,
         active: false,
-        artist : false,
-        verified : false,
-        website : null,
-        socials : [],
-        token : randomHash.randomHash(20),
+        artist: false,
+        verified: false,
+        website: null,
+        socials: [],
+        token: randomHash.randomHash(20),
         created_at: timestaps.ladate(),
         updated_at: timestaps.ladate(),
       };
@@ -104,6 +105,37 @@ User.prototype.login = function () {
           reject("Email / Password invalid");
         }
       });
+    }
+  });
+};
+User.prototype.updateSettingsCleaning = function () {
+  return new Promise(async (resolve, reject) => {
+    if (!validator.isEmail(this.data.email)) {
+      this.errors.push("email is not correct!");
+    }
+  });
+};
+
+User.prototype.updateSettings = function () {
+  return new Promise(async (resolve, reject) => {
+    this.updateSettingsCleaning();
+    if (this.errors.length) {
+      reject(this.errors);
+    } else {
+      await usersCollection.update(
+        { _id: ObjectId(this.data._id) },
+        {
+          $set: {
+            email: this.data.email,
+            firstname: this.data.firstname,
+            lastname: this.data.lastname,
+            about: this.data.about,
+            wesite: this.data.website,
+            socials: this.data.socials,
+            updated_at: timestaps.ladate(),
+          },
+        }
+      );
     }
   });
 };
