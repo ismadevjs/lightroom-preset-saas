@@ -9,7 +9,11 @@
                 <div class="author author--page">
                     <div class="author__meta">
                         <a  class="author__avatar author__avatar--verified">
-                            <img src="img/avatars/avatar5.jpg" alt="">
+                            <% if (user.avatar === null ) {%>
+                                <img src="img/avatars/avatar5.jpg" alt="">    
+                            <%} else {%>
+                                <img src="/<%=user.avatar.filename%>" alt="">    
+                            <%} %>
                             <div class="middle">
                                 <img src = "icon/picture.svg" class="svgImage" alt="My Happy SVG"/>
                               </div>

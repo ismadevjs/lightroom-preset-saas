@@ -16,7 +16,7 @@ exports.signinPost = function (req, res) {
   user
     .login()
     .then((r) => {
-      req.session.user = { _id: r._id, username: r.username, email: r.email };
+      req.session.user = { _id: r._id, username: r.username, email: r.email, avatar : r.avatar };
       req.flash("message", "Welcome Back!");
       req.session.save(() => {
         res.redirect("/");
