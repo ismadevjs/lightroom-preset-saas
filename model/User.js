@@ -143,7 +143,49 @@ User.prototype.updateSettings = function () {
 };
 User.prototype.updatePassword = function () {
   return new Promise(async (resolve, reject) => {
-    console.log(this.data);
+    if (this.data.oldpass === "") {
+      this.errors.push("the current password filed should not be empty");
+    }
+    if (this.data.newpass === "") {
+      this.errors.push("the new password filed should not be empty");
+    }
+    if (this.data.confirmpass === "") {
+      this.errors.push("the confirm password filed should not be empty");
+    }
+    if (this.data.newpass !== this.data.confirmpass) {
+      this.errors.push("Password do not match");
+    }
+    if (this.data.newpass.length > 0 && this.data.newpass.length > 50) {
+      this.errors.push("Password should not exceed 50 charachters");
+    }
+    if (this.data.newpass.length < 6) {
+      this.errors.push("Password should be more than 6 charachters");
+    }
+    if (this.errors.length) {
+      reject(this.errors);
+    } else {
+      await usersCollection.findOne(
+        {
+          _id: ObjectId(this.data._id),
+        },
+        async (err, founded) => {
+          if (!bcrypt.compareSync(this.data.oldpass, founded.password)) {
+            reject("the password does not match our records");
+          } else {
+            await usersCollection.updateOne(
+              { _id: ObjectId(this.data._id) },
+              {
+                $set: {
+                  password: bcrypt.hashSync(this.data.newpass, salt),
+                  updated_at: timestaps.ladate(),
+                },
+              }
+            );
+            resolve();
+          }
+        }
+      );
+    }
   });
 };
 module.exports = User;
