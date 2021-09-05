@@ -69,7 +69,7 @@ exports.changePassword = function (req, res) {
     });
 };
 exports.updateAvatarImage = function (req, res) {
-  const user = new User(req.file);
+  const user = new User(req.body, req.file);
   user
     .updateAvatarImageModal()
     .then(() => {

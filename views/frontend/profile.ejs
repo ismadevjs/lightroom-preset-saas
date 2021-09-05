@@ -15,6 +15,7 @@
                               </div>
                         </a>
                        <form id="avatar-form" action="/update-avatar-image" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="_id" value="<%=user._id%>">
                             <input type="file" name="avatar" id="update-avatar" hidden>
                        </form>
                         <h1 class="author__name"><a href="author.html">Lily Rose</a></h1>

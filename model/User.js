@@ -5,8 +5,9 @@ const salt = bcrypt.genSaltSync(12);
 const timestaps = require("../controller/dateController");
 const randomHash = require("../controller/randomHash");
 const { ObjectId } = require("mongodb");
-const User = function (data) {
+const User = function (data, avatar) {
   this.data = data;
+  this.avatar = avatar
   this.errors = [];
 };
 
@@ -190,7 +191,12 @@ User.prototype.updatePassword = function () {
 };
 User.prototype.updateAvatarImageModal = function() { 
   return new Promise(async(resolve, reject) => {
-    console.log(this.data)
+    await usersCollection.updateOne({ _id : ObjectId(this.data._id) }, {
+      $set : {
+        avatar : this.avatar
+      }
+    })
+    resolve()
   })
 }
 module.exports = User;
