@@ -25,4 +25,9 @@ router.get("/logout", authenticationController.logout);
 router.get("/profile", frontendController.profile);
 router.post("/settings", authenticationController.settings);
 router.post("/change-password", authenticationController.changePassword);
+router.post(
+  "/update-avatar-image",
+  upload.single("avatar"),
+  authenticationController.updateAvatarImage
+);
 module.exports = router;

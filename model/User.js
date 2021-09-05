@@ -188,4 +188,9 @@ User.prototype.updatePassword = function () {
     }
   });
 };
+User.prototype.updateAvatarImageModal = function() { 
+  return new Promise(async(resolve, reject) => {
+    console.log(this.data)
+  })
+}
 module.exports = User;

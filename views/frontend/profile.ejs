@@ -8,9 +8,15 @@
             <div class="col-12 col-xl-3">
                 <div class="author author--page">
                     <div class="author__meta">
-                        <a href="author.html" class="author__avatar author__avatar--verified">
+                        <a  class="author__avatar author__avatar--verified">
                             <img src="img/avatars/avatar5.jpg" alt="">
+                            <div class="middle">
+                                <img src = "icon/picture.svg" class="svgImage" alt="My Happy SVG"/>
+                              </div>
                         </a>
+                       <form id="avatar-form" action="/update-avatar-image" method="POST" enctype="multipart/form-data">
+                            <input type="file" name="avatar" id="update-avatar" hidden>
+                       </form>
                         <h1 class="author__name"><a href="author.html">Lily Rose</a></h1>
                         <h2 class="author__nickname"><a href="author.html">@<%=user.username%></a></h2>
                         <p class="author__text">All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary</p>

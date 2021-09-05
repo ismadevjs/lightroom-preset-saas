@@ -68,3 +68,20 @@ exports.changePassword = function (req, res) {
       });
     });
 };
+exports.updateAvatarImage = function (req, res) {
+  const user = new User(req.file);
+  user
+    .updateAvatarImageModal()
+    .then(() => {
+      req.flash("message", "Updated!");
+      req.session.save(() => {
+        res.redirect("/profile");
+      });
+    })
+    .catch((e) => {
+      req.flash("message", e);
+      req.session.save(() => {
+        res.redirect("/profile");
+      });
+    });
+};
