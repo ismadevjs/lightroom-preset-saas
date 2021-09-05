@@ -72,7 +72,8 @@ User.prototype.register = function () {
     } else {
       this.data = {
         username: this.data.username.trim(),
-        fullname: null,
+        firstname: null,
+        lastname: null,
         email: this.data.email.trim(),
         password: bcrypt.hashSync(this.data.password, salt),
         avatar: null,
@@ -130,13 +131,19 @@ User.prototype.updateSettings = function () {
             firstname: this.data.firstname,
             lastname: this.data.lastname,
             about: this.data.about,
-            wesite: this.data.website,
+            website: this.data.website,
             socials: this.data.socials,
             updated_at: timestaps.ladate(),
           },
         }
       );
+      resolve();
     }
+  });
+};
+User.prototype.updatePassword = function () {
+  return new Promise(async (resolve, reject) => {
+    console.log(this.data);
   });
 };
 module.exports = User;

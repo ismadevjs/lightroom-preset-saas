@@ -23,5 +23,6 @@ router.post("/signin", authenticationController.signinPost);
 router.get("/404", specialPages.errorPage);
 router.get("/logout", authenticationController.logout);
 router.get("/profile", frontendController.profile);
-router.post('/settings', authenticationController.settings);
+router.post("/settings", authenticationController.settings);
+router.post("/change-password", authenticationController.changePassword);
 module.exports = router;
