@@ -5,6 +5,7 @@ const path = require("path");
 const specialPages = require("./controller/specialPages");
 const frontendController = require("./controller/frontendController");
 const authenticationController = require("./controller/authenticationController");
+const backendController = require("./controller/backendController");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -30,4 +31,8 @@ router.post(
   upload.single("avatar"),
   authenticationController.updateAvatarImage
 );
+
+// backend area
+router.get('/control', backendController.control) // admin 
+
 module.exports = router;
