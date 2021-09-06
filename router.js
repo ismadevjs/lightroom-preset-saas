@@ -35,4 +35,5 @@ router.post(
 // backend area
 router.get("/control", backendController.control); // admin
 router.get("/control/categories", backendController.categories);
+router.post("/add-category", backendController.categoryAdd);
 module.exports = router;
