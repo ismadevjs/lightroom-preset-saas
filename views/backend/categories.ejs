@@ -74,7 +74,8 @@
                                     <tbody>
                                        
                                        
-                                    <% categories.forEach(category => { %>
+                                    <% categories.forEach(function(category) { %>
+                                        
                                             <tr>
                                                 <td class="checkbox-column">
                                                     <div class="custom-control custom-checkbox checkbox-primary">
@@ -83,9 +84,9 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <p class="mb-0">category.name</p>
+                                                    <p class="mb-0"><%=category.name%></p>
                                                 </td>
-                                                <td>category.updated_at.fullDate</td>
+                                                <td><%=category.updated_at.fullDate%></td>
     
                                                 <td class="text-center">
                                                     <ul class="table-controls">

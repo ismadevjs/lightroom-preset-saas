@@ -5,7 +5,7 @@ exports.control = function (req, res) {
 };
 exports.categories = async function (req, res) {
   res.render("backend/categories", {
-      categories : await categoryCollection.find()
+      categories : await categoryCollection.find().toArray()
   });
 };
 exports.categoryAdd = function (req, res) {
