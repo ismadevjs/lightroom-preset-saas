@@ -33,6 +33,6 @@ router.post(
 );
 
 // backend area
-router.get('/control', backendController.control) // admin 
-
+router.get("/control", backendController.control); // admin
+router.get("/control/categories", backendController.categories);
 module.exports = router;
