@@ -25,3 +25,20 @@ exports.categoryAdd = function (req, res) {
       });
     });
 };
+exports.categoryDeleteByOne = function(req, res) {
+  const category = new Category(req.params.id);
+  category
+    .deleteByOne()
+    .then(() => {
+      req.flash("message", "Category Deleted!");
+      req.session.save(() => {
+        res.redirect("/control/categories");
+      });
+    })
+    .catch((e) => {
+      req.flash("message", e);
+      req.session.save(() => {
+        res.redirect("/control/categories");
+      });
+    });
+}

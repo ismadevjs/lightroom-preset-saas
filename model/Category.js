@@ -1,5 +1,6 @@
 const timestaps = require("../controller/dateController");
-const categoryCollection = require('../db').db().collection('categories')
+const categoryCollection = require("../db").db().collection("categories");
+const { ObjectId } = require("mongodb");
 const Category = function (data) {
   this.data = data;
   this.errors = [];
@@ -18,10 +19,20 @@ Category.prototype.add = function () {
         created_at: timestaps.ladate(),
         updated_at: timestaps.ladate(),
       };
-      await categoryCollection.insertOne(this.data)
+      await categoryCollection.insertOne(this.data);
       resolve();
     }
   });
 };
-
-module.exports = Category
+Category.prototype.deleteByOne = function () {
+  return new Promise(async (resolve, reject) => {
+    let data = await categoryCollection.findOne({ _id: ObjectId(this.data) });
+    if (data !== null ) {
+      await categoryCollection.deleteOne({ _id : ObjectId(this.data) })
+      resolve()
+    } else {
+      reject('Category is not found')
+    }
+  });
+};
+module.exports = Category;

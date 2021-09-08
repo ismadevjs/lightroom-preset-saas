@@ -36,4 +36,5 @@ router.post(
 router.get("/control", backendController.control); // admin
 router.get("/control/categories", backendController.categories);
 router.post("/add-category", backendController.categoryAdd);
+router.get("/category-delete-" + ":id", backendController.categoryDeleteByOne);
 module.exports = router;
