@@ -6,6 +6,7 @@ const specialPages = require("./controller/specialPages");
 const frontendController = require("./controller/frontendController");
 const authenticationController = require("./controller/authenticationController");
 const backendController = require("./controller/backendController");
+const middleware = require("./middleware/authentication");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -31,10 +32,28 @@ router.post(
   upload.single("avatar"),
   authenticationController.updateAvatarImage
 );
-
+router.get("/become-an-artist", frontendController.becomeAnArtist);
 // backend area
-router.get("/control", backendController.control); // admin
-router.get("/control/categories", backendController.categories);
-router.post("/add-category", backendController.categoryAdd);
-router.get("/category-delete-" + ":id", backendController.categoryDeleteByOne);
+router.get("/control", middleware.checkifAdmin, backendController.control); // admin
+router.get(
+  "/control/categories",
+  middleware.checkifAdmin,
+  backendController.categories
+);
+router.post(
+  "/add-category",
+  middleware.checkifAdmin,
+  backendController.categoryAdd
+);
+router.get(
+  "/category-delete-" + ":id",
+  middleware.checkifAdmin,
+  backendController.categoryDeleteByOne
+);
+router.post(
+  "/category-update/:id",
+  middleware.checkifAdmin,
+  backendController.categoryUpdate
+);
+router.get('/control/become-an-artist', backendController.becomeAnArtist)
 module.exports = router;

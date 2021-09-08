@@ -1,11 +1,11 @@
 const Category = require("../model/Category");
-const categoryCollection = require('../db').db().collection('categories')
+const categoryCollection = require("../db").db().collection("categories");
 exports.control = function (req, res) {
   res.render("backend/index");
 };
 exports.categories = async function (req, res) {
   res.render("backend/categories", {
-      categories : await categoryCollection.find().toArray()
+    categories: await categoryCollection.find().toArray(),
   });
 };
 exports.categoryAdd = function (req, res) {
@@ -25,7 +25,7 @@ exports.categoryAdd = function (req, res) {
       });
     });
 };
-exports.categoryDeleteByOne = function(req, res) {
+exports.categoryDeleteByOne = function (req, res) {
   const category = new Category(req.params.id);
   category
     .deleteByOne()
@@ -41,4 +41,24 @@ exports.categoryDeleteByOne = function(req, res) {
         res.redirect("/control/categories");
       });
     });
-}
+};
+exports.categoryUpdate = function (req, res) {
+  const category = new Category(req.body, req.params.id);
+  category
+    .deleteByOne()
+    .then(() => {
+      req.flash("message", "Category Updated!");
+      req.session.save(() => {
+        res.redirect("/control/categories");
+      });
+    })
+    .catch((e) => {
+      req.flash("message", e);
+      req.session.save(() => {
+        res.redirect("/control/categories");
+      });
+    });
+};
+exports.becomeAnArtist = function (req, res) {
+  res.render("backend/become-an-artist");
+};

@@ -7,7 +7,7 @@ const randomHash = require("../controller/randomHash");
 const { ObjectId } = require("mongodb");
 const User = function (data, avatar) {
   this.data = data;
-  this.avatar = avatar
+  this.avatar = avatar;
   this.errors = [];
 };
 
@@ -83,13 +83,21 @@ User.prototype.register = function () {
         active: false,
         artist: false,
         verified: false,
+        role: "member",
         website: null,
         socials: [],
         token: randomHash.randomHash(20),
         created_at: timestaps.ladate(),
         updated_at: timestaps.ladate(),
       };
-      await usersCollection.insertOne(this.data);
+      let findIfUserExists = await usersCollection.find().toArray();
+      if (findIfUserExists.length) {
+        this.data.role = "member";
+        await usersCollection.insert(this.data);
+      } else {
+        this.data.role = "admin";
+        await usersCollection.insert(this.data);
+      }
       resolve();
     }
   });
@@ -189,14 +197,17 @@ User.prototype.updatePassword = function () {
     }
   });
 };
-User.prototype.updateAvatarImageModal = function() { 
-  return new Promise(async(resolve, reject) => {
-    await usersCollection.updateOne({ _id : ObjectId(this.data._id) }, {
-      $set : {
-        avatar : this.avatar
+User.prototype.updateAvatarImageModal = function () {
+  return new Promise(async (resolve, reject) => {
+    await usersCollection.updateOne(
+      { _id: ObjectId(this.data._id) },
+      {
+        $set: {
+          avatar: this.avatar,
+        },
       }
-    })
-    resolve()
-  })
-}
+    );
+    resolve();
+  });
+};
 module.exports = User;
