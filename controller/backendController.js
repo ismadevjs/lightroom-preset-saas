@@ -1,4 +1,5 @@
 const Category = require("../model/Category");
+const Page = require("../model/Page");
 const categoryCollection = require("../db").db().collection("categories");
 exports.control = function (req, res) {
   res.render("backend/index");
@@ -61,4 +62,21 @@ exports.categoryUpdate = function (req, res) {
 };
 exports.becomeAnArtist = function (req, res) {
   res.render("backend/become-an-artist");
+};
+exports.becomeAnArtistPost = function (req, res) {
+  const page = new Page(req.body);
+  page
+    .update()
+    .then(() => {
+      req.flash("message", "Page Updated!");
+      req.session.save(() => {
+        res.redirect("/control/become-an-artist");
+      });
+    })
+    .catch((e) => {
+      req.flash("message", e);
+      req.session.save(() => {
+        res.redirect("/control/become-an-artist");
+      });
+    });
 };

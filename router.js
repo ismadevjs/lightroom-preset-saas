@@ -55,5 +55,14 @@ router.post(
   middleware.checkifAdmin,
   backendController.categoryUpdate
 );
-router.get('/control/become-an-artist', backendController.becomeAnArtist)
+router.get(
+  "/control/become-an-artist",
+  middleware.checkifAdmin,
+  backendController.becomeAnArtist
+);
+router.post(
+  "/control/become-an-artist",
+  middleware.checkifAdmin,
+  backendController.becomeAnArtistPost
+);
 module.exports = router;
