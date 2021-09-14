@@ -61,7 +61,7 @@ Page.prototype.updatePage = function () {
 
 Page.prototype.deletePage = function () {
   return new Promise(async (resolve, reject) => {
-    await pagesCollection.deleteOne(this.data);
+    await pagesCollection.deleteOne({_id : ObjectId(this.data)});
     resolve();
   });
 };
