@@ -65,4 +65,15 @@ router.post(
   middleware.checkifAdmin,
   backendController.becomeAnArtistPost
 );
+router.get("/control/pages", middleware.checkifAdmin, backendController.pages);
+router.get(
+  "/control/add-page",
+  middleware.checkifAdmin,
+  backendController.addPage
+);
+router.post(
+  "/control/add-page",
+  middleware.checkifAdmin,
+  backendController.AddPagePost
+);
 module.exports = router;

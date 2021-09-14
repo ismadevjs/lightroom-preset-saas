@@ -1,6 +1,8 @@
 const Category = require("../model/Category");
 const Page = require("../model/Page");
 const categoryCollection = require("../db").db().collection("categories");
+const pagesCollection = require("../db").db().collection("pages");
+
 exports.control = function (req, res) {
   res.render("backend/index");
 };
@@ -60,13 +62,15 @@ exports.categoryUpdate = function (req, res) {
       });
     });
 };
-exports.becomeAnArtist = function (req, res) {
-  res.render("backend/become-an-artist");
+exports.becomeAnArtist = async function (req, res) {
+  res.render("backend/become-an-artist", {
+    pages: await pagesCollection.findOne(),
+  });
 };
 exports.becomeAnArtistPost = function (req, res) {
-  const page = new Page(req.body);
+  const page = new Page(req.body, req.session.user._id);
   page
-    .update()
+    .becomeArtist()
     .then(() => {
       req.flash("message", "Page Updated!");
       req.session.save(() => {
@@ -77,6 +81,31 @@ exports.becomeAnArtistPost = function (req, res) {
       req.flash("message", e);
       req.session.save(() => {
         res.redirect("/control/become-an-artist");
+      });
+    });
+};
+exports.pages = async function (req, res) {
+  res.render("backend/pages", {
+    pages: await pagesCollection.find().skip(1).toArray(),
+  });
+};
+exports.addPage = function (req, res) {
+  res.render("backend/add-page");
+};
+exports.AddPagePost = function (req, res) {
+  let page = new Page(req.body);
+  page
+    .create()
+    .then(() => {
+      req.flash("message", "Page added");
+      req.session.save(() => {
+        res.redirect("/control/pages");
+      });
+    })
+    .catch((e) => {
+      req.flash("message", e);
+      req.session.save(() => {
+        res.redirect("/control/pages");
       });
     });
 };

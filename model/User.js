@@ -110,6 +110,7 @@ User.prototype.login = function () {
     } else {
       usersCollection.findOne({ email: this.data.email }).then((e) => {
         if (e && bcrypt.compareSync(this.data.password, e.password)) {
+          console.log(e)
           resolve(e);
         } else {
           reject("Email / Password invalid");

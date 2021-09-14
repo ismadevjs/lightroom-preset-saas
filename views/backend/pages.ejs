@@ -1,0 +1,98 @@
+<%-include('components/header')%>
+
+    <%-include('components/navbar')%>
+
+    <!--  BEGIN MAIN CONTAINER  -->
+    <div class="main-container" id="container">
+
+        <div class="overlay"></div>
+        <div class="cs-overlay"></div>
+
+       <%-include('components/sidebar')%>
+        
+        <!--  BEGIN CONTENT PART  -->
+        <div id="content" class="main-content">
+            <div class="container">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h3>Categories</h3>
+                    </div>
+                </div>
+
+                <div class="row layout-spacing ">
+                    <div class="col-lg-12 col-md-12 layout-spacing">
+                    <div class="statbox widget box box-shadow">
+                        <div class="widget-header">
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                    <h4>Icon Table</h4>
+                                </div>  
+                                <div class="col-xl-12 col-md-12 col-sm-12 col-12 pr-1">
+                                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 pr-1">
+                                        <a href="/control/add-page" class="btn btn-primary mb-4 mr-3">Add new page</a>
+                                    </div> 
+                                </div>     
+                               
+                              </div>
+                          </div>
+                      </div>
+                        <div class="widget-content widget-content-area">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover table-striped table-checkable table-highlight-head mb-4">
+                                    <thead>
+                                        <tr>
+                                            <th class="checkbox-column">
+                                                <div class="custom-control custom-checkbox checkbox-primary">
+                                                  <input type="checkbox" class="custom-control-input todochkbox" id="todoAll">
+                                                  <label class="custom-control-label" for="todoAll"></label>
+                                                </div>
+                                            </th>
+                                            <th class="">Name</th>
+                                            <th class="">Date</th>
+                                            <th class="text-center">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% pages.map(page => { %>
+                                            <tr>
+                                                <td class="checkbox-column">
+                                                    <div class="custom-control custom-checkbox checkbox-primary">
+                                                      <input type="checkbox" class="custom-control-input todochkbox" id="todo-1">
+                                                      <label class="custom-control-label" for="todo-1"></label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <%=page.title%>
+                                                </td>
+                                                <td><%=page.updated_at.fullDate%></td>
+    
+                                                <td class="text-center">
+                                                    <ul class="table-controls">
+                                                        <li>
+                                                            <div class="col-xl-12 col-md-12 col-sm-12 col-12 pr-1">
+                                                                 <a href="/page-<%=page._id%>" class="btn btn-success" ><i class="flaticon-edit  bg-success p-1 text-white br-6 mb-1"></i></a>
+                                                            </div>  
+                                                        </li>
+                                                        <li><a href="/page-delete-<%=page._id%>" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="flaticon-delete  bg-danger p-1 text-white br-6 mb-1"></i></a></li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        <% }) %>  
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                   
+
+                </div>
+            </div>
+        </div>    
+        <!--  END CONTENT PART  -->
+    </div>
+    <!-- END MAIN CONTAINER -->
+
+   <%-include('components/footer')%>
+</body>
+</html>
