@@ -1,6 +1,6 @@
-const { pages } = require("../controller/backendController");
 const timestaps = require("../controller/dateController");
 const pagesCollection = require("../db").db().collection("pages");
+const { ObjectId } = require("mongodb");
 const Page = function (data) {
   this.data = data;
   this.error = [];
@@ -41,4 +41,29 @@ Page.prototype.create = function () {
     resolve();
   });
 };
+
+Page.prototype.updatePage = function () {
+  return new Promise(async (resolve, reject) => {
+    await pagesCollection.updateOne(
+      { _id: ObjectId(this.data._id) },
+      {
+        $set: {
+          title: this.data.title,
+          body: this.data.body,
+          created_at: timestaps.ladate(),
+          updated_at: timestaps.ladate(),
+        },
+      }
+    );
+    resolve();
+  });
+};
+
+Page.prototype.deletePage = function () {
+  return new Promise(async (resolve, reject) => {
+    await pagesCollection.deleteOne(this.data);
+    resolve();
+  });
+};
+
 module.exports = Page;

@@ -76,4 +76,19 @@ router.post(
   middleware.checkifAdmin,
   backendController.AddPagePost
 );
+router.get(
+  "/control/page-update-:id",
+  middleware.checkifAdmin,
+  backendController.pageUpdate
+);
+router.post(
+  "/control/page-update",
+  middleware.checkifAdmin,
+  backendController.pageUpdatePost
+);
+router.get(
+  "/control/page-delete-:id",
+  middleware.checkifAdmin,
+  backendController.pageDelete
+);
 module.exports = router;

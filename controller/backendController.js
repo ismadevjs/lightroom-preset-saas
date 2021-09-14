@@ -2,7 +2,7 @@ const Category = require("../model/Category");
 const Page = require("../model/Page");
 const categoryCollection = require("../db").db().collection("categories");
 const pagesCollection = require("../db").db().collection("pages");
-
+const { ObjectId } = require("mongodb");
 exports.control = function (req, res) {
   res.render("backend/index");
 };
@@ -98,6 +98,46 @@ exports.AddPagePost = function (req, res) {
     .create()
     .then(() => {
       req.flash("message", "Page added");
+      req.session.save(() => {
+        res.redirect("/control/pages");
+      });
+    })
+    .catch((e) => {
+      req.flash("message", e);
+      req.session.save(() => {
+        res.redirect("/control/pages");
+      });
+    });
+};
+exports.pageUpdate = async function (req, res) {
+  res.render("backend/page-update", {
+    page: await pagesCollection.findOne({ _id: ObjectId(req.params.id) }),
+  });
+};
+exports.pageUpdatePost = function (req, res) {
+  let page = new Page(req.body);
+  page
+    .updatePage()
+    .then(() => {
+      req.flash("message", "Page Updated");
+      req.session.save(() => {
+        res.redirect("/control/pages");
+      });
+    })
+    .catch((e) => {
+      req.flash("message", e);
+      req.session.save(() => {
+        res.redirect("/control/pages");
+      });
+    });
+};
+
+exports.pageDelete = function (req, res) {
+  let page = new Page(req.params.id);
+  page
+    .deletePage()
+    .then(() => {
+      req.flash("message", "Page Deleted");
       req.session.save(() => {
         res.redirect("/control/pages");
       });
