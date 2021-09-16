@@ -18,6 +18,7 @@
                                 <img src = "icon/picture.svg" class="svgImage" alt="My Happy SVG"/>
                               </div>
                         </a>
+                        <!-- change the avatar image -->
                        <form id="avatar-form" action="/update-avatar-image" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="_id" value="<%=user._id%>">
                             <input type="file" name="avatar" id="update-avatar" hidden>

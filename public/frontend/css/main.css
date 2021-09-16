@@ -5659,3 +5659,8 @@ body::-webkit-scrollbar-thumb {
 .author__avatar:hover .middle {
   opacity: 1;
 }
+/* custome css */
+
+span.badge__danger {
+  background-color: red;
+}

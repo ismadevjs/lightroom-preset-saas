@@ -33,6 +33,16 @@ router.post(
   authenticationController.updateAvatarImage
 );
 router.get("/become-an-artist", frontendController.becomeAnArtist);
+router.get("/create", frontendController.create);
+router.post(
+  "/create",
+  upload.fields([
+    { name: "image1", maxCount: 1 },
+    { name: "image2", maxCount: 1 },
+    { name: "files", maxCount: 1 },
+  ]),
+  frontendController.createPost
+);
 // backend area
 router.get("/control", middleware.checkifAdmin, backendController.control); // admin
 router.get(
@@ -91,4 +101,5 @@ router.get(
   middleware.checkifAdmin,
   backendController.pageDelete
 );
+
 module.exports = router;

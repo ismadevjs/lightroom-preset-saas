@@ -72,7 +72,9 @@ exports.updateAvatarImage = function (req, res) {
   const user = new User(req.body, req.file);
   user
     .updateAvatarImageModal()
-    .then(() => {
+    .then((r) => {
+      req.session.user.avatar =  r.avatar
+      req.session.user.token = r.token
       req.flash("message", "Updated!");
       req.session.save(() => {
         res.redirect("/profile");

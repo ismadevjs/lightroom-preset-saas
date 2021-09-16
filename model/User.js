@@ -208,7 +208,8 @@ User.prototype.updateAvatarImageModal = function () {
         },
       }
     );
-    resolve();
+    let r = await usersCollection.findOne({ _id : ObjectId(this.data._id) })
+    resolve(r);
   });
 };
 module.exports = User;
