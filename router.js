@@ -43,6 +43,7 @@ router.post(
   ]),
   frontendController.createPost
 );
+router.get("/item/:name", frontendController.item);
 // backend area
 router.get("/control", middleware.checkifAdmin, backendController.control); // admin
 router.get(

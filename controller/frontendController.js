@@ -2,8 +2,13 @@ const { ObjectId } = require("mongodb");
 const Item = require("../model/Item");
 const usersCollection = require("../db").db().collection("users");
 const categoriesCollection = require("../db").db().collection("categories");
-exports.index = function (req, res) {
-  res.render("frontend/index");
+const itemCollections = require("../db").db().collection("items");
+
+exports.index = async function (req, res) {
+  res.render("frontend/index", {
+    items: await itemCollections.find().toArray(),
+    users: await usersCollection.find().toArray(),
+  });
 };
 exports.signup = function (req, res) {
   res.render("frontend/signup");
@@ -42,4 +47,9 @@ exports.createPost = function (req, res) {
         res.redirect("/create");
       });
     });
+};
+exports.item = async function (req, res) {
+  res.render("frontend/item", {
+    item : await itemCollections.findOne({ name : req.params.name.replace(/\-/g," ") })
+  });
 };
