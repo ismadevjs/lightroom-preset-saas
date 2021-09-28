@@ -102,5 +102,5 @@ router.get(
   middleware.checkifAdmin,
   backendController.pageDelete
 );
-
+router.get("/control/users", middleware.checkifAdmin, backendController.users);
 module.exports = router;

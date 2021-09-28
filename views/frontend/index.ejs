@@ -44,7 +44,7 @@
                             </a>
                             <h3 class="card__title"><a href="/item/<%=item.name.replace(/ /g,"-");%>"><%=item.name%></a></h3>
                             <% users.map(author => {%>
-                                <% if (JSON.stringify(author._id) === JSON.stringify(user._id)) {%>
+                                <% if ( JSON.stringify(author._id) === JSON.stringify(user._id)) {%>
                                     <div class="card__author card__author--verified">
                                         <img src="/<%=author.avatar.filename%>" alt="">
                                         <a href="/author/<%=author.username%>">@<%=author.username%></a>

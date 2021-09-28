@@ -2,6 +2,7 @@ const Category = require("../model/Category");
 const Page = require("../model/Page");
 const categoryCollection = require("../db").db().collection("categories");
 const pagesCollection = require("../db").db().collection("pages");
+const usersCollection = require("../db").db().collection("users");
 const { ObjectId } = require("mongodb");
 exports.control = function (req, res) {
   res.render("backend/index");
@@ -148,4 +149,11 @@ exports.pageDelete = function (req, res) {
         res.redirect("/control/pages");
       });
     });
+};
+exports.users = async function (req, res) {
+  return new Promise(async (resolve, reject) => {
+    res.render("backend/users", {
+      users: await usersCollection.find(),
+    });
+  });
 };
